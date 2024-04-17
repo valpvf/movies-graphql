@@ -4,7 +4,12 @@ import { MovieCard } from "./MovieCard";
 import { RootState } from "../../store";
 import { Movie, fetchMovies } from "../../reducers/movies";
 import { useAppDispatch } from "../../hooks";
-import styles from "./Movies.module.scss";
+import {
+  Container,
+  Grid,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 
 interface MovisProps {
   movies: Movie[];
@@ -19,24 +24,29 @@ function Movies({ movies, loading }: MovisProps) {
   }, [dispatch]);
 
   return (
-    <section>
-      <div className={styles.list}>
-        {loading ? (
-          <h3>Loading...</h3>
-        ) : (
-          movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              overview={movie.overview}
-              popularity={movie.popularity}
-              image={movie.image}
-            />
-          ))
-        )}
-      </div>
-    </section>
+    <Container sx={{ py: 8 }} maxWidth="lg">
+      <Typography variant="h4" align="center" gutterBottom>
+        Now playing
+      </Typography>
+      {loading ? (
+        <LinearProgress color="secondary" />
+      ) : (
+        <Grid container spacing={4}>
+          {movies.map((movie) => (
+            <Grid item key={movie.id} xs={12} sm={6} md={4}>
+              <MovieCard
+                key={movie.id}
+                id={movie.id}
+                title={movie.title}
+                overview={movie.overview}
+                popularity={movie.popularity}
+                image={movie.image}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Container>
   );
 }
 
