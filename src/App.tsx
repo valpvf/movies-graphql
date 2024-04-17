@@ -1,36 +1,13 @@
-import React from "react";
-import { Link as RouterLink, Outlet } from "react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import {
-  AppBar,
   CssBaseline,
-  Link,
   ThemeProvider,
-  Toolbar,
-  Typography,
   createTheme,
 } from "@mui/material";
-import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import { teal } from "@mui/material/colors";
-
-function HeaderLink({
-  to,
-  children,
-}: {
-  to: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      component={RouterLink}
-      to={to}
-      variant="button"
-      color="inherit"
-      sx={{ my: 1, mx: 1.5 }}
-    >
-      {children}
-    </Link>
-  );
-}
+import { AppHeader } from "./AppHeader";
+import { AuthContext, AuthInfo, anonimousUser } from "./AuthContext";
 
 const defaultTheme = createTheme({
   palette: {
@@ -41,31 +18,27 @@ const defaultTheme = createTheme({
   },
 });
 
+const fakeAuth: AuthInfo = {
+  user: {
+    name: "Diana",
+  },
+};
+
 function App() {
+  const [auth, setAuth] = useState<AuthInfo>({ user: anonimousUser });
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <AppBar>
-        <Toolbar>
-          <LiveTvOutlinedIcon sx={{ mr: 2 }} />
-          <Typography
-            variant="h6"
-            color="inherit"
-            noWrap
-            // sx={{ flexGrow: 1 }}
-          >
-            The Movies DB
-          </Typography>
-          <nav>
-            <HeaderLink to="/">Home</HeaderLink>
-            <HeaderLink to="/movies">Movies</HeaderLink>
-            <HeaderLink to="/about">About</HeaderLink>
-          </nav>
-        </Toolbar>
-      </AppBar>
-      <main>
-        <Outlet />
-      </main>
+      <AuthContext.Provider value={auth}>
+        <AppHeader
+          onLogin={() => setAuth(fakeAuth)}
+          onLogout={() => setAuth({ user: anonimousUser })}
+        />
+        <main>
+          <Outlet />
+        </main>
+      </AuthContext.Provider>
     </ThemeProvider>
   );
 }

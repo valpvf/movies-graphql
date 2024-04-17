@@ -5,14 +5,18 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 interface MovieCardProps {
   id: number;
   title: string;
   overview: string;
   popularity: number;
+  enableUserActions?: boolean;
   image?: string;
 }
 
@@ -21,6 +25,7 @@ export function MovieCard({
   title,
   overview,
   popularity,
+  enableUserActions,
   image = "/movie-thumb.jpg",
 }: MovieCardProps) {
   return (
@@ -55,6 +60,13 @@ export function MovieCard({
         >
           Details
         </Button>
+        {enableUserActions && (
+          <Tooltip title="Add to favorites">
+            <IconButton>
+              <FavoriteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </CardActions>
     </Card>
   );

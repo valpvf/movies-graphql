@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { MovieCard } from "./MovieCard";
 import { RootState } from "../../store";
@@ -10,6 +10,7 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material";
+import { AuthContext, anonimousUser } from "../../AuthContext";
 
 interface MovisProps {
   movies: Movie[];
@@ -18,6 +19,9 @@ interface MovisProps {
 
 function Movies({ movies, loading }: MovisProps) {
   const dispatch = useAppDispatch();
+
+  const { user } = useContext(AuthContext);
+  const loggedIn = user !== anonimousUser;
 
   useEffect(() => {
     dispatch(fetchMovies());
@@ -41,6 +45,7 @@ function Movies({ movies, loading }: MovisProps) {
                 overview={movie.overview}
                 popularity={movie.popularity}
                 image={movie.image}
+                enableUserActions={loggedIn}
               />
             </Grid>
           ))}
