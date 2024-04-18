@@ -1,33 +1,41 @@
 import configuration from "../configuration";
 
+const apiBasePath = `${configuration.apiUrl}/3`;
+
 async function get<TBody>(relativeUrl: string): Promise<TBody> {
-  const options = {
+  var headers = new Headers();
+  headers.append("Accept", "application/json");
+  headers.append("Authorization", `Bearer ${configuration.apiToken}`);
+
+  var requestOptions = {
     method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${configuration.apiToken}`,
-    },
+    headers: headers,
   };
 
-  const response = await fetch(
-    `${configuration.apiUrl}/3${relativeUrl}`,
-    options
-  );
-  const data: TBody = await response.json();
-  return data;
-}
-
-export interface MovieDetails {
-  id: number;
-  title: string;
-  overview: string;
-  popularity: number;
-  backdrop_path?: string;
+  const response = await fetch(`${apiBasePath}${relativeUrl}`, requestOptions);
+  const value: TBody = await response.json();
+  return value;
 }
 
 interface PageResponse<TResult> {
   page: number;
   results: TResult[];
+  total_pages: number;
+  total_results: number;
+}
+
+interface MovieDetails {
+  id: number;
+  title: string;
+  overview: string;
+  popularity: number;
+  backdrop_path?: string | null;
+}
+
+interface PageDetails<T> {
+  results: T[];
+  page: number;
+  totalPages: number;
 }
 
 interface Configuration {
@@ -36,14 +44,22 @@ interface Configuration {
   };
 }
 
-export const client = {
-  async getConfiguration() {
-    return get<Configuration>("/configuration");
+interface ITmbdClient {
+  getConfiguration: () => Promise<Configuration>;
+  getNowPlaying: (page: number) => Promise<PageDetails<MovieDetails>>;
+}
+
+export const client: ITmbdClient = {
+  getConfiguration: async () => {
+    const response = await get<Configuration>("/configuration");
+    return response;
   },
-  async getNowPlaying(): Promise<MovieDetails[]> {
-    const response = await get<PageResponse<MovieDetails>>(
-      "/movie/now_playing?page=1"
-    );
-    return response.results;
+  getNowPlaying: async (page: number = 1) => {
+    const response = await get<PageResponse<MovieDetails>>(`/movie/now_playing?page=${page}`);
+    return {
+      results: response.results,
+      totalPages: response.total_pages,
+      page: response.page,
+    };
   },
 };

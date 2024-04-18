@@ -1,32 +1,20 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  Link,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext, anonimousUser } from "./AuthContext";
+import { AuthContext, anonymousUser } from "./AuthContext";
 
-interface AuthHeaderProps {
+interface Props {
   onLogin(): void;
   onLogout(): void;
 }
 
-export function AppHeader({ onLogin, onLogout }: AuthHeaderProps) {
+export function AppHeader({ onLogin, onLogout }: Props) {
   return (
     <AppBar position="static">
       <Toolbar>
         <LiveTvOutlinedIcon sx={{ mr: 2 }} />
-        <Typography
-          variant="h6"
-          color="inherit"
-          noWrap
-          // sx={{ flexGrow: 1 }}
-        >
+        <Typography variant="h6" color="inherit" noWrap>
           The Movies DB
         </Typography>
         <Box sx={{ flexGrow: 1 }}>
@@ -49,46 +37,24 @@ interface AuthSectionProps {
 
 function AuthSection({ onLogin, onLogout }: AuthSectionProps) {
   const auth = useContext(AuthContext);
-  const loggedIn = auth.user !== anonimousUser;
 
-  if (loggedIn) {
-    return (
-      <>
-        <Typography>Hello, {auth.user.name}!</Typography>
-        <Button
-          color="inherit"
-          variant="outlined"
-          sx={{ ml: 1.5 }}
-          onClick={onLogout}
-        >
-          Log out
-        </Button>
-      </>
-    );
-  }
-
-  return (
+  return auth.user !== anonymousUser ? (
+    <>
+      <Typography>Hello, {auth.user.name}!</Typography>
+      <Button color="inherit" variant="outlined" onClick={onLogout} sx={{ ml: 1.5 }}>
+        Log out
+      </Button>
+    </>
+  ) : (
     <Button color="inherit" variant="outlined" onClick={onLogin}>
       Log in
     </Button>
   );
 }
 
-function HeaderLink({
-  to,
-  children,
-}: {
-  to: string;
-  children: React.ReactNode;
-}) {
+function HeaderLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
-    <Link
-      component={RouterLink}
-      to={to}
-      variant="button"
-      color="inherit"
-      sx={{ my: 1, mx: 1.5 }}
-    >
+    <Link component={RouterLink} to={to} variant="button" color="inherit" sx={{ my: 1, mx: 1.5 }}>
       {children}
     </Link>
   );

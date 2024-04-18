@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
-import { CountdownText } from "./CountdownText";
 import { CountdownVideo } from "./CountdownVideo";
+import { CountdownText } from "./CountdownText";
 import { MapView } from "./MapView";
 
-export function About() {
+function About() {
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       <CountdownText />
@@ -12,3 +12,5 @@ export function About() {
     </Container>
   );
 }
+
+export default About;

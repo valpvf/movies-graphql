@@ -15,10 +15,12 @@ export class ErrorBoundary extends Component<PropsWithChildren<any>> {
   static getDerivedStateFromError() {
     return { hasError: true };
   }
+
   render() {
     if (this.state.hasError) {
-      return <h1>Ooops! Something went wrong... </h1>;
+      return <h2>Oops! Something went wrong...</h2>;
     }
+
     return this.props.children;
   }
 }

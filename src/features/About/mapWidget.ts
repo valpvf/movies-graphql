@@ -6,19 +6,15 @@ export function createMapWidget(containerDomNode: HTMLElement) {
   map.setView([49.575, 32.091], 6);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
   return map;
 }
 
-export function addPopupToMapwidget(map: L.Map) {
+export function addPopupToMapWidget(map: L.Map) {
   const popupDiv = document.createElement("div");
-  L.popup()
-    .setLatLng([50.4488, 30.5222])
-    .setContent(popupDiv)
-    .openOn(map);
-
+  L.popup().setLatLng([50.4488, 30.5222]).setContent(popupDiv).openOn(map);
+  
   return popupDiv;
 }

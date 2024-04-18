@@ -2,12 +2,12 @@ import { Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 export function CountdownText() {
-  const [contdown, setContdown] = useState(9);
-  const intervalRef = useRef<any>();
+  const intervalRef = useRef<any>(null);
+  const [countdown, setCountdown] = useState(9);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setContdown((value) => value - 1);
+      setCountdown((value) => value - 1);
     }, 1000);
 
     return () => {
@@ -16,14 +16,14 @@ export function CountdownText() {
   }, []);
 
   useEffect(() => {
-    if (contdown === 0) {
+    if (countdown === 0) {
       clearInterval(intervalRef.current);
     }
-  }, [contdown]);
+  }, [countdown]);
 
   return (
-    <Typography variant="h4" align="center">
-      Coming soon: {contdown}
+    <Typography variant="h4" align="center" sx={{ mb: 2 }}>
+      Coming soon: {countdown}.
     </Typography>
   );
 }
