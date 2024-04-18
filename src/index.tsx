@@ -17,6 +17,7 @@ import Movies from "./features/Movies/Movies";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Home } from "./features/Home/Home";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,7 +26,9 @@ const root = ReactDOM.createRoot(
 function AppEntrypoint() {
   return (
     <Provider store={store}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Provider>
   );
 }
