@@ -33,26 +33,31 @@ function AppEntrypoint() {
   );
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <AppEntrypoint />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/movies",
+          element: <Movies />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <AppEntrypoint />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/movies",
-        element: <Movies />,
-      },
-    ],
-  },
-]);
+    basename: "/movies-graphql",
+  }
+);
 
 root.render(
   <React.StrictMode>
