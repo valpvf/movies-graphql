@@ -33,32 +33,39 @@ export function MoviesFilter({ onApply }: MoviesFilterProps) {
     },
   });
 
-  const [keywordsOptions, setKeywordsOptions] = useState<KeywordItem[]>([]);
+  const [keywordsOptions, setKeywordsOptions] = useState<
+    KeywordItem[]
+  >([]);
   const [keywordsLoading, setKeywordsLoading] = useState(false);
 
   const genres = useAppSelector((state) => state.movies.genres);
 
-  const fetchKeywords = useMemo(
-    () =>
-      debounce(async (query) => {
-        if (query) {
-          setKeywordsLoading(true);
+  const fetchKeywordsOptions = async (query: string) => {
+    if (query) {
+      setKeywordsLoading(true);
 
-          const options = await client.getKeywords(query);
+      const options = await client.getKeywords(query);
 
-          setKeywordsLoading(false);
-          setKeywordsOptions(options);
-        } else {
-          setKeywordsOptions([]);
-        }
-      }, 1000),
+      setKeywordsLoading(false);
+      setKeywordsOptions(options);
+    } else {
+      setKeywordsOptions([]);
+    }
+  };
+
+  const debouncedFetchKeywordsOptions = useMemo(
+    () => debounce(fetchKeywordsOptions, 1000),
     []
   );
 
   return (
     <Paper sx={{ m: 2, p: 0.5 }}>
       <form onSubmit={handleSubmit(onApply)}>
-        <FormControl sx={{ m: 2, display: "block" }} component="fieldset" variant="standard">
+        <FormControl
+          sx={{ m: 2, display: "block" }}
+          component="fieldset"
+          variant="standard"
+        >
           <Controller
             name="keywords"
             control={control}
@@ -72,14 +79,24 @@ export function MoviesFilter({ onApply }: MoviesFilterProps) {
                 getOptionLabel={(option) => option.name}
                 onChange={(_, value) => onChange(value)}
                 value={value}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                onInputChange={(_, value) => fetchKeywords(value)}
-                renderInput={(params) => <TextField {...params} label="Keywords" />}
+                isOptionEqualToValue={(option, value) =>
+                  option.id === value.id
+                }
+                onInputChange={(_, value) =>
+                  debouncedFetchKeywordsOptions(value)
+                }
+                renderInput={(params) => (
+                  <TextField {...params} label="Keywords" />
+                )}
               />
             )}
           />
         </FormControl>
-        <FormControl sx={{ m: 2, display: "block" }} component="fieldset" variant="standard">
+        <FormControl
+          sx={{ m: 2, display: "block" }}
+          component="fieldset"
+          variant="standard"
+        >
           <FormLabel component="legend">Genres</FormLabel>
           <FormGroup sx={{ maxHeight: 500 }}>
             <Controller
@@ -95,11 +112,20 @@ export function MoviesFilter({ onApply }: MoviesFilterProps) {
                           value={genre.id}
                           checked={field.value.includes(genre.id)}
                           onChange={(event, checked) => {
-                            const valueNumber = Number(event.target.value);
+                            const valueNumber = Number(
+                              event.target.value
+                            );
                             if (checked) {
-                              field.onChange([...field.value, valueNumber]);
+                              field.onChange([
+                                ...field.value,
+                                valueNumber,
+                              ]);
                             } else {
-                              field.onChange(field.value.filter((value) => value !== valueNumber));
+                              field.onChange(
+                                field.value.filter(
+                                  (value) => value !== valueNumber
+                                )
+                              );
                             }
                           }}
                         />
@@ -112,7 +138,13 @@ export function MoviesFilter({ onApply }: MoviesFilterProps) {
             />
           </FormGroup>
         </FormControl>
-        <Button type="submit" sx={{ m: 2 }} variant="contained" startIcon={<FilterAltOutlinedIcon />} disabled={!formState.isDirty}>
+        <Button
+          type="submit"
+          sx={{ m: 2 }}
+          variant="contained"
+          startIcon={<FilterAltOutlinedIcon />}
+          disabled={!formState.isDirty}
+        >
           Apply filter
         </Button>
       </form>
