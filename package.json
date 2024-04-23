@@ -1,8 +1,8 @@
 {
-  "name": "movies-db",
+  "name": "movies-graphql",
   "version": "0.1.1",
   "private": true,
-  "homepage": "https://valpvf.github.io/movies-graphql",
+  "homepage": "https://valpvf.github.io/movies-graphql/",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
