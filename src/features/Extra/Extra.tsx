@@ -1,6 +1,7 @@
 import { Container, Grid, LinearProgress } from "@mui/material";
 import { useState } from "react";
 import {
+  Episode,
   EpisodesQuery,
   useGetEpisodesQuery,
 } from "../../services/rickandmorty";
@@ -22,7 +23,7 @@ export function Extra() {
       />
       {isFetching && <LinearProgress sx={{ mb: 2 }} />}
       <Grid container spacing={2}>
-        {data?.results.map((e) => (
+        {data?.results.map((e: Episode) => (
           <Grid item key={e.episode} xs={12} sm={6} md={4} lg={3}>
             <EpisodeCard
               name={e.name}
