@@ -28,7 +28,7 @@ function MovieCard({
   overview,
   popularity,
   onAddFavorite,
-  image = "/movie-thumb.png",
+  image = "./movie-thumb.png",
   enableUserActions = false,
 }: Props) {
   return (
