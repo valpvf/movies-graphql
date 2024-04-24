@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/movies-graphql/static/css/main.dfbb28b3.css",
-    "main.js": "/movies-graphql/static/js/main.f0970e1b.js",
+    "main.js": "/movies-graphql/static/js/main.456ad66b.js",
     "static/css/486.83a2440a.chunk.css": "/movies-graphql/static/css/486.83a2440a.chunk.css",
     "static/js/486.f329e067.chunk.js": "/movies-graphql/static/js/486.f329e067.chunk.js",
-    "static/js/717.c3d0bae8.chunk.js": "/movies-graphql/static/js/717.c3d0bae8.chunk.js",
+    "static/js/717.3e8f15f5.chunk.js": "/movies-graphql/static/js/717.3e8f15f5.chunk.js",
     "static/js/453.0ad218b7.chunk.js": "/movies-graphql/static/js/453.0ad218b7.chunk.js",
     "static/js/850.07a6ab91.chunk.js": "/movies-graphql/static/js/850.07a6ab91.chunk.js",
     "static/js/314.88dc3540.chunk.js": "/movies-graphql/static/js/314.88dc3540.chunk.js",
@@ -66,16 +66,16 @@
     "static/media/roboto-greek-ext-700-normal.woff": "/movies-graphql/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/movies-graphql/index.html",
     "main.dfbb28b3.css.map": "/movies-graphql/static/css/main.dfbb28b3.css.map",
-    "main.f0970e1b.js.map": "/movies-graphql/static/js/main.f0970e1b.js.map",
+    "main.456ad66b.js.map": "/movies-graphql/static/js/main.456ad66b.js.map",
     "486.83a2440a.chunk.css.map": "/movies-graphql/static/css/486.83a2440a.chunk.css.map",
     "486.f329e067.chunk.js.map": "/movies-graphql/static/js/486.f329e067.chunk.js.map",
-    "717.c3d0bae8.chunk.js.map": "/movies-graphql/static/js/717.c3d0bae8.chunk.js.map",
+    "717.3e8f15f5.chunk.js.map": "/movies-graphql/static/js/717.3e8f15f5.chunk.js.map",
     "453.0ad218b7.chunk.js.map": "/movies-graphql/static/js/453.0ad218b7.chunk.js.map",
     "850.07a6ab91.chunk.js.map": "/movies-graphql/static/js/850.07a6ab91.chunk.js.map",
     "314.88dc3540.chunk.js.map": "/movies-graphql/static/js/314.88dc3540.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dfbb28b3.css",
-    "static/js/main.f0970e1b.js"
+    "static/js/main.456ad66b.js"
   ]
 }
